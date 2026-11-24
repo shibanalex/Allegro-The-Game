@@ -1,0 +1,59 @@
+[gd_resource type="AudioBusLayout" format=3 uid="uid://khm2vmar0cym"]
+
+[sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_j3pel"]
+cutoff_hz = 1900.0
+db = 1
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_g28q7"]
+room_size = 0.28
+damping = 0.75
+spread = 0.6
+hipass = 0.28
+dry = 0.72
+wet = 0.26
+
+[sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_n8wo2"]
+cutoff_hz = 5200.0
+db = 1
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_5t1r3"]
+room_size = 0.68
+damping = 0.52
+spread = 0.85
+hipass = 0.18
+dry = 0.62
+wet = 0.44
+
+[resource]
+bus/1/name = &"Music"
+bus/1/solo = false
+bus/1/mute = false
+bus/1/bypass_fx = false
+bus/1/volume_db = 0.0
+bus/1/send = &"Master"
+bus/2/name = &"SFX"
+bus/2/solo = false
+bus/2/mute = false
+bus/2/bypass_fx = false
+bus/2/volume_db = 0.0
+bus/2/send = &"Master"
+bus/3/name = &"Footsteps"
+bus/3/solo = false
+bus/3/mute = false
+bus/3/bypass_fx = false
+bus/3/volume_db = 0.0
+bus/3/send = &"SFX"
+bus/3/effect/0/effect = SubResource("AudioEffectLowPassFilter_j3pel")
+bus/3/effect/0/enabled = true
+bus/3/effect/1/effect = SubResource("AudioEffectReverb_g28q7")
+bus/3/effect/1/enabled = true
+bus/4/name = &"MenuUI"
+bus/4/solo = false
+bus/4/mute = false
+bus/4/bypass_fx = false
+bus/4/volume_db = -10.5
+bus/4/send = &"SFX"
+bus/4/effect/0/effect = SubResource("AudioEffectLowPassFilter_n8wo2")
+bus/4/effect/0/enabled = true
+bus/4/effect/1/effect = SubResource("AudioEffectReverb_5t1r3")
+bus/4/effect/1/enabled = true
