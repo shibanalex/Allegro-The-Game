@@ -1,0 +1,360 @@
+[gd_scene format=3 uid="uid://dcs566m5ju584"]
+
+[ext_resource type="Texture2D" uid="uid://eg6ql0welk71" path="res://assets/tilesets/boy_room_canvas.png" id="1_kdubu"]
+[ext_resource type="Texture2D" uid="uid://dnofxll55hsc5" path="res://assets/light_soft.png" id="2_d21ai"]
+[ext_resource type="Texture2D" uid="uid://b7ygqvgahlhfw" path="res://assets/tilesets/boy_room_furniture.png" id="3_rj586"]
+[ext_resource type="Script" uid="uid://bhk5llmogt8mt" path="res://scripts/player.gd" id="4_4d7sh"]
+[ext_resource type="Texture2D" uid="uid://c551gvtehoupf" path="res://assets/characters/hero_allegro_sheet.png" id="5_ir8iy"]
+[ext_resource type="Shader" uid="uid://dhn5e3hxsomcd" path="res://assets/shaders/night_film.gdshader" id="6_hqns4"]
+[ext_resource type="Script" uid="uid://b0c6gu5ld0p5x" path="res://scripts/room_atmosphere.gd" id="7_atmo"]
+[ext_resource type="Shader" uid="uid://bigkkixjx03i" path="res://assets/shaders/light_shaft.gdshader" id="8_shaft"]
+[ext_resource type="Texture2D" uid="uid://c18gymky64wye" path="res://assets/particles/dust_mote.png" id="9_mote"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_add"]
+light_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_dust_alpha"]
+offsets = PackedFloat32Array(0, 0.25, 0.5, 0.75, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.6, 1, 1, 1, 0.85, 1, 1, 1, 0.6, 1, 1, 1, 0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x0ka3"]
+size = Vector2(58, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0h7mo"]
+size = Vector2(24, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nr8wp"]
+size = Vector2(40, 58)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d2bti"]
+size = Vector2(16, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ta5nu"]
+size = Vector2(60, 18)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lamp_cone"]
+shader = ExtResource("8_shaft")
+shader_parameter/ray_color = Color(0.95, 0.72, 0.38, 0.11)
+shader_parameter/beam_start_x = 0.22
+shader_parameter/beam_width = 0.48
+shader_parameter/angle_skew = -0.1
+shader_parameter/spread_growth = 0.22
+shader_parameter/ray_frequency = 4.0
+shader_parameter/shimmer_speed = 0.25
+shader_parameter/edge_softness = 0.38
+shader_parameter/vertical_fade_power = 1.65
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_flf07"]
+size = Vector2(15, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k73cj"]
+size = Vector2(18, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rjqkl"]
+size = Vector2(14, 8)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_moon_rays"]
+shader = ExtResource("8_shaft")
+shader_parameter/ray_color = Color(0.52, 0.68, 0.9, 0.13)
+shader_parameter/beam_start_x = 0.06
+shader_parameter/beam_width = 0.4
+shader_parameter/angle_skew = 0.38
+shader_parameter/spread_growth = 0.16
+shader_parameter/ray_frequency = 5.0
+shader_parameter/shimmer_speed = 0.28
+shader_parameter/edge_softness = 0.36
+shader_parameter/vertical_fade_power = 1.55
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fs4d3"]
+shader = ExtResource("6_hqns4")
+shader_parameter/tilt_shift_amount = 1.55
+shader_parameter/focus_center_y = 0.5
+shader_parameter/focus_half_band = 0.22
+shader_parameter/bloom_strength = 0.16
+shader_parameter/bloom_threshold = 0.72
+shader_parameter/ca_strength = 0.0022
+shader_parameter/vignette_strength = 0.74
+shader_parameter/grain_strength = 0.022
+shader_parameter/sepia_mix = 0.18
+shader_parameter/contrast_boost = 1.12
+
+[node name="Node2D" type="Node2D" unique_id=1872573662]
+script = ExtResource("7_atmo")
+
+[node name="Backdrop" type="ColorRect" parent="." unique_id=12212650]
+offset_left = -640.0
+offset_top = -480.0
+offset_right = 640.0
+offset_bottom = 480.0
+color = Color(0.045, 0.038, 0.048, 1)
+
+[node name="RoomCanvas" type="Sprite2D" parent="." unique_id=890886655]
+texture = ExtResource("1_kdubu")
+
+[node name="WindowSnowClip" type="ColorRect" parent="." unique_id=149001122]
+clip_children = 1
+offset_left = -121.0
+offset_top = -79.0
+offset_right = -83.0
+offset_bottom = -41.0
+
+[node name="WindowSnowParticles" type="CPUParticles2D" parent="WindowSnowClip" unique_id=149001123]
+material = SubResource("CanvasItemMaterial_add")
+position = Vector2(20, -4)
+amount = 14
+texture = ExtResource("9_mote")
+lifetime = 3.2
+preprocess = 2.0
+emission_shape = 3
+emission_rect_extents = Vector2(22, 2)
+direction = Vector2(-0.35, 1)
+spread = 18.0
+gravity = Vector2(-2, 14)
+initial_velocity_min = 8.0
+initial_velocity_max = 15.0
+scale_amount_min = 0.25
+scale_amount_max = 0.55
+color = Color(0.82, 0.9, 1, 0.55)
+color_ramp = SubResource("Gradient_dust_alpha")
+
+[node name="WindowNightLight" type="PointLight2D" parent="." unique_id=1771278640]
+position = Vector2(-96, -32)
+color = Color(0.46, 0.62, 0.9, 1)
+energy = 0.46
+texture = ExtResource("2_d21ai")
+texture_scale = 1.85
+
+[node name="PianoScoreLight" type="PointLight2D" parent="." unique_id=1771278641]
+position = Vector2(-34, -22)
+color = Color(0.88, 0.72, 0.5, 1)
+energy = 0.26
+texture = ExtResource("2_d21ai")
+texture_scale = 1.05
+
+[node name="RoomBounds" type="StaticBody2D" parent="." unique_id=160435285]
+
+[node name="NorthWall" type="CollisionPolygon2D" parent="RoomBounds" unique_id=1848162847]
+polygon = PackedVector2Array(-190, -120, 190, -120, 190, -4, -190, -4)
+
+[node name="SouthWall" type="CollisionPolygon2D" parent="RoomBounds" unique_id=680360681]
+polygon = PackedVector2Array(-200, 91, 200, 91, 200, 130, -200, 130)
+
+[node name="WestWall" type="CollisionPolygon2D" parent="RoomBounds" unique_id=503713108]
+polygon = PackedVector2Array(-180, -20, -156, -20, -156, 105, -180, 105)
+
+[node name="EastWall" type="CollisionPolygon2D" parent="RoomBounds" unique_id=498528347]
+polygon = PackedVector2Array(156, -20, 180, -20, 180, 105, 156, 105)
+
+[node name="YSort" type="Node2D" parent="." unique_id=1303317302]
+y_sort_enabled = true
+
+[node name="UprightPiano" type="StaticBody2D" parent="YSort" unique_id=572403796]
+position = Vector2(-34, 3)
+
+[node name="Sprite2D" type="Sprite2D" parent="YSort/UprightPiano" unique_id=954806583]
+texture = ExtResource("3_rj586")
+offset = Vector2(0, -26)
+region_enabled = true
+region_rect = Rect2(8, 8, 62, 52)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/UprightPiano" unique_id=1537673647]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_x0ka3")
+
+[node name="Bookshelf" type="StaticBody2D" parent="YSort" unique_id=955240283]
+position = Vector2(14, 3)
+
+[node name="Sprite2D" type="Sprite2D" parent="YSort/Bookshelf" unique_id=1902431405]
+texture = ExtResource("3_rj586")
+offset = Vector2(0, -40)
+region_enabled = true
+region_rect = Rect2(64, 68, 26, 80)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/Bookshelf" unique_id=431940073]
+position = Vector2(0, -7)
+shape = SubResource("RectangleShape2D_0h7mo")
+
+[node name="SingleBed" type="StaticBody2D" parent="YSort" unique_id=518980301]
+position = Vector2(-131, 62)
+
+[node name="Sprite2D" type="Sprite2D" parent="YSort/SingleBed" unique_id=844309404]
+texture = ExtResource("3_rj586")
+offset = Vector2(0, -40)
+region_enabled = true
+region_rect = Rect2(8, 68, 44, 80)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/SingleBed" unique_id=1193462992]
+position = Vector2(0, -29)
+shape = SubResource("RectangleShape2D_nr8wp")
+
+[node name="NightstandStool" type="StaticBody2D" parent="YSort" unique_id=921012241]
+position = Vector2(-95, 9)
+
+[node name="Sprite2D" type="Sprite2D" parent="YSort/NightstandStool" unique_id=1913655937]
+texture = ExtResource("3_rj586")
+offset = Vector2(0, -13)
+region_enabled = true
+region_rect = Rect2(184, 8, 19, 26)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/NightstandStool" unique_id=1138144578]
+position = Vector2(0, -5)
+shape = SubResource("RectangleShape2D_d2bti")
+
+[node name="ComposerDesk" type="StaticBody2D" parent="YSort" unique_id=1699086794]
+position = Vector2(60, 26)
+
+[node name="Sprite2D" type="Sprite2D" parent="YSort/ComposerDesk" unique_id=972008579]
+texture = ExtResource("3_rj586")
+offset = Vector2(0, -26)
+region_enabled = true
+region_rect = Rect2(80, 8, 66, 52)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/ComposerDesk" unique_id=576547303]
+position = Vector2(0, -9)
+shape = SubResource("RectangleShape2D_ta5nu")
+
+[node name="DeskLampLight" type="PointLight2D" parent="YSort/ComposerDesk" unique_id=340067562]
+position = Vector2(18, -43)
+color = Color(0.96, 0.72, 0.38, 1)
+energy = 0.78
+texture = ExtResource("2_d21ai")
+texture_scale = 1.85
+
+[node name="DeskLampCoreHalo" type="PointLight2D" parent="YSort/ComposerDesk" unique_id=340067563]
+position = Vector2(18, -43)
+color = Color(1, 0.84, 0.58, 1)
+energy = 0.28
+texture = ExtResource("2_d21ai")
+texture_scale = 0.55
+
+[node name="LaptopScreenGlow" type="PointLight2D" parent="YSort/ComposerDesk" unique_id=1643025836]
+position = Vector2(-6, -32)
+color = Color(0.45, 0.7, 0.96, 1)
+energy = 0.36
+texture = ExtResource("2_d21ai")
+texture_scale = 0.85
+
+[node name="LampLightCone" type="ColorRect" parent="YSort/ComposerDesk" unique_id=340067564]
+material = SubResource("ShaderMaterial_lamp_cone")
+offset_left = -22.0
+offset_top = -44.0
+offset_right = 46.0
+offset_bottom = 14.0
+mouse_filter = 2
+
+[node name="DeskChair" type="StaticBody2D" parent="YSort" unique_id=657755656]
+position = Vector2(50, 38)
+
+[node name="Sprite2D" type="Sprite2D" parent="YSort/DeskChair" unique_id=1590099369]
+texture = ExtResource("3_rj586")
+offset = Vector2(0, -21)
+region_enabled = true
+region_rect = Rect2(156, 8, 19, 42)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/DeskChair" unique_id=149341189]
+position = Vector2(0, -5)
+shape = SubResource("RectangleShape2D_flf07")
+
+[node name="StudentBackpack" type="StaticBody2D" parent="YSort" unique_id=452812315]
+position = Vector2(104, 30)
+
+[node name="Sprite2D" type="Sprite2D" parent="YSort/StudentBackpack" unique_id=1707137546]
+texture = ExtResource("3_rj586")
+offset = Vector2(0, -13)
+region_enabled = true
+region_rect = Rect2(212, 8, 23, 26)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/StudentBackpack" unique_id=273275748]
+position = Vector2(0, -5)
+shape = SubResource("RectangleShape2D_k73cj")
+
+[node name="Player" type="CharacterBody2D" parent="YSort" unique_id=1830396691]
+position = Vector2(-18, 42)
+script = ExtResource("4_4d7sh")
+
+[node name="Sprite2D" type="Sprite2D" parent="YSort/Player" unique_id=43408941]
+texture = ExtResource("5_ir8iy")
+offset = Vector2(0, -18)
+hframes = 3
+vframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/Player" unique_id=31895884]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_rjqkl")
+
+[node name="Camera2D" type="Camera2D" parent="YSort/Player" unique_id=2077503194]
+position = Vector2(0, -18)
+zoom = Vector2(3.2, 3.2)
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
+
+[node name="AmbientHeroLight" type="PointLight2D" parent="YSort/Player" unique_id=1155414506]
+position = Vector2(0, -16)
+color = Color(0.92, 0.78, 0.62, 1)
+energy = 0.42
+texture = ExtResource("2_d21ai")
+texture_scale = 1.35
+
+[node name="WindowGodRays" type="ColorRect" parent="." unique_id=189001100]
+material = SubResource("ShaderMaterial_moon_rays")
+offset_left = -130.0
+offset_top = -80.0
+offset_right = -18.0
+offset_bottom = 38.0
+mouse_filter = 2
+
+[node name="MoonlightDustParticles" type="CPUParticles2D" parent="." unique_id=189001101]
+material = SubResource("CanvasItemMaterial_add")
+position = Vector2(-84, -18)
+amount = 9
+texture = ExtResource("9_mote")
+lifetime = 7.5
+preprocess = 4.0
+emission_shape = 3
+emission_rect_extents = Vector2(26, 30)
+direction = Vector2(0.3, 0.8)
+spread = 120.0
+gravity = Vector2(0.4, 1.2)
+initial_velocity_min = 0.8
+initial_velocity_max = 2.2
+damping_min = 0.2
+damping_max = 0.5
+scale_amount_min = 0.4
+scale_amount_max = 0.65
+color = Color(0.62, 0.68, 0.76, 0.18)
+color_ramp = SubResource("Gradient_dust_alpha")
+
+[node name="WarmRoomDustParticles" type="CPUParticles2D" parent="." unique_id=189001102]
+material = SubResource("CanvasItemMaterial_add")
+position = Vector2(58, 6)
+amount = 10
+texture = ExtResource("9_mote")
+lifetime = 8.0
+preprocess = 5.0
+emission_shape = 3
+emission_rect_extents = Vector2(36, 28)
+direction = Vector2(0, -1)
+spread = 160.0
+gravity = Vector2(0, -0.8)
+initial_velocity_min = 0.6
+initial_velocity_max = 1.8
+damping_min = 0.2
+damping_max = 0.5
+scale_amount_min = 0.4
+scale_amount_max = 0.65
+color = Color(0.76, 0.68, 0.56, 0.18)
+color_ramp = SubResource("Gradient_dust_alpha")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=138087172]
+color = Color(0.46, 0.44, 0.48, 1)
+
+[node name="AtmosphereLayer" type="CanvasLayer" parent="." unique_id=758853767]
+
+[node name="FilmEffect" type="ColorRect" parent="AtmosphereLayer" unique_id=420864158]
+material = SubResource("ShaderMaterial_fs4d3")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

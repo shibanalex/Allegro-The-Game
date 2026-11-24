@@ -1,0 +1,81 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/title_screen.gd" id="1_05l2w"]
+[ext_resource type="Texture2D" path="res://assets/title/title_piano_bg.png" id="2_hafda"]
+[ext_resource type="Texture2D" path="res://assets/particles/dust_mote.png" id="3_tpml5"]
+[ext_resource type="Shader" path="res://assets/shaders/night_film.gdshader" id="4_jqemp"]
+
+[sub_resource type="Gradient" id="Gradient_013yr"]
+offsets = PackedFloat32Array(0, 0.25, 0.75, 1)
+colors = PackedColorArray(1, 1, 1, 0, 0.82, 0.88, 0.96, 0.22, 0.82, 0.88, 0.96, 0.2, 1, 1, 1, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8vmu4"]
+shader = ExtResource("4_jqemp")
+shader_parameter/tilt_shift_amount = 0.0
+shader_parameter/focus_center_y = null
+shader_parameter/focus_half_band = null
+shader_parameter/bloom_strength = 0.08
+shader_parameter/bloom_threshold = 0.8
+shader_parameter/ca_strength = 0.0004
+shader_parameter/vignette_strength = 0.4
+shader_parameter/grain_strength = 0.01
+shader_parameter/sepia_mix = 0.02
+shader_parameter/contrast_boost = 1.02
+shader_parameter/paper_texture_strength = 0.012
+shader_parameter/desaturate_amount = 0.16
+shader_parameter/melancholy_grade = 0.35
+shader_parameter/vhs_strength = 0.24
+
+[node name="TitleScreen" type="Control" unique_id=539462841]
+layout_mode = 3
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_05l2w")
+
+[node name="Backdrop" type="ColorRect" parent="." unique_id=204376032]
+show_behind_parent = true
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0.027, 0.031, 0.051, 1)
+
+[node name="TitleArt" type="TextureRect" parent="." unique_id=2044894940]
+modulate = Color(0.92, 0.94, 0.98, 0.9)
+show_behind_parent = true
+texture_filter = 1
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+texture = ExtResource("2_hafda")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="MenuSnow" type="CPUParticles2D" parent="." unique_id=2043660251]
+show_behind_parent = true
+position = Vector2(576, -20)
+amount = 28
+texture = ExtResource("3_tpml5")
+lifetime = 8.0
+preprocess = 5.0
+emission_shape = 3
+emission_rect_extents = Vector2(960, 10)
+direction = Vector2(-0.18, 1)
+spread = 15.0
+gravity = Vector2(-1.5, 6)
+initial_velocity_min = 16.0
+initial_velocity_max = 32.0
+scale_amount_min = 0.35
+scale_amount_max = 0.75
+color_ramp = SubResource("Gradient_013yr")
+
+[node name="AtmosphereLayer" type="CanvasLayer" parent="." unique_id=805247954]
+
+[node name="FilmEffect" type="ColorRect" parent="AtmosphereLayer" unique_id=1939258663]
+material = SubResource("ShaderMaterial_8vmu4")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2

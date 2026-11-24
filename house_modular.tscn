@@ -1,0 +1,483 @@
+[gd_scene format=4 uid="uid://dbokva0ds517a"]
+
+[ext_resource type="Script" uid="uid://b0c6gu5ld0p5x" path="res://scripts/room_atmosphere.gd" id="1_j0t4g"]
+[ext_resource type="TileSet" uid="uid://cjmos8pyany4e" path="res://assets/tilesets/house_tileset.tres" id="2_0h2h1"]
+[ext_resource type="Texture2D" uid="uid://c18gymky64wye" path="res://assets/particles/dust_mote.png" id="3_apfus"]
+[ext_resource type="Texture2D" uid="uid://672ou0r7t05l" path="res://assets/lights/light_window_beam.png" id="4_rclfi"]
+[ext_resource type="Texture2D" uid="uid://dbgfr4trgducm" path="res://assets/lights/light_radial_smooth.png" id="5_786is"]
+[ext_resource type="TileSet" uid="uid://jebuwpbqou4n" path="res://assets/tilesets/house_furniture_tileset.tres" id="6_7cfhd"]
+[ext_resource type="TileSet" uid="uid://cmmtswacvnbnh" path="res://assets/tilesets/house_props_tileset.tres" id="7_wrbt3"]
+[ext_resource type="Texture2D" path="res://assets/materials/house_furniture_atlas_canvas.tres" id="8_lehf1"]
+[ext_resource type="Script" uid="uid://cqf4glqumdqa6" path="res://scripts/dynamic_shadow.gd" id="9_e1uhb"]
+[ext_resource type="Texture2D" uid="uid://dhb7s7n42qxd8" path="res://assets/lights/light_lamp_cone.png" id="10_pndv8"]
+[ext_resource type="Script" uid="uid://bhk5llmogt8mt" path="res://scripts/player.gd" id="11_1qyui"]
+[ext_resource type="Texture2D" path="res://assets/materials/hero_allegro_sheet_canvas.tres" id="12_a2oq8"]
+[ext_resource type="Shader" uid="uid://bigkkixjx03i" path="res://assets/shaders/light_shaft.gdshader" id="13_yvq2q"]
+[ext_resource type="Shader" uid="uid://dhn5e3hxsomcd" path="res://assets/shaders/night_film.gdshader" id="14_padlv"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_6j63b"]
+light_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_4cmro"]
+offsets = PackedFloat32Array(0, 0.25, 0.5, 0.75, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.65, 1, 1, 1, 0.9, 1, 1, 1, 0.65, 1, 1, 1, 0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h036i"]
+size = Vector2(40, 58)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kfcv1"]
+size = Vector2(60, 18)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e3v35"]
+size = Vector2(15, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kvwkq"]
+size = Vector2(76, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jwgin"]
+size = Vector2(56, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3tucr"]
+size = Vector2(14, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6rmph"]
+size = Vector2(14, 12)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_r1bfd"]
+radius = 4.0
+height = 14.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ob88h"]
+shader = ExtResource("13_yvq2q")
+shader_parameter/ray_color = Color(0.68, 0.82, 0.96, 0.115)
+shader_parameter/beam_start_x = 0.08
+shader_parameter/beam_width = 0.44
+shader_parameter/angle_skew = 0.34
+shader_parameter/spread_growth = 0.18
+shader_parameter/ray_frequency = 5.0
+shader_parameter/shimmer_speed = 0.25
+shader_parameter/edge_softness = 0.38
+shader_parameter/vertical_fade_power = 1.45
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5mo67"]
+blend_mode = 1
+light_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_le556"]
+offsets = PackedFloat32Array(0, 0.25, 0.7, 1)
+colors = PackedColorArray(1, 1, 1, 0, 0.86, 0.92, 1, 0.3, 0.98, 0.93, 0.84, 0.22, 1, 1, 1, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cml3x"]
+shader = ExtResource("14_padlv")
+shader_parameter/tilt_shift_amount = 0.0
+shader_parameter/focus_center_y = 0.5
+shader_parameter/focus_half_band = 0.32
+shader_parameter/bloom_strength = 0.16
+shader_parameter/bloom_threshold = 0.7
+shader_parameter/ca_strength = 0.0005
+shader_parameter/vignette_strength = 0.3
+shader_parameter/grain_strength = 0.011
+shader_parameter/sepia_mix = 0.03
+shader_parameter/contrast_boost = 1.04
+shader_parameter/paper_texture_strength = 0.014
+shader_parameter/desaturate_amount = 0.2
+shader_parameter/melancholy_grade = 0.44
+shader_parameter/vhs_strength = 0.28
+
+[node name="HouseModular" type="Node2D" unique_id=1458552946]
+script = ExtResource("1_j0t4g")
+
+[node name="Backdrop" type="ColorRect" parent="." unique_id=2004922830]
+offset_left = -640.0
+offset_top = -480.0
+offset_right = 1800.0
+offset_bottom = 1200.0
+color = Color(0.032, 0.03, 0.042, 1)
+
+[node name="HouseMap" type="TileMapLayer" parent="." unique_id=475663307]
+tile_map_data = PackedByteArray("AAAIAAAAAAAAAAQAAAAJAAAAAAAAAAUAAAAKAAAAAAAAAAUAAAALAAAAAAAAAAUAAAAMAAAAAAAAAAUAAAANAAAAAAAAAAUAAAAOAAAAAAAAAAUAAAAPAAAAAAAAAAUAAAAQAAAAAAAAAAQAAAARAAAAAAAAAAUAAAASAAAAAAAAAAUAAAATAAAAAAAAAAUAAAAUAAAAAAAAAAUAAAAVAAAAAAAAAAUAAAAWAAAAAAAAAAUAAAAXAAAAAAAAAAUAAAAYAAAAAAAAAAQAAAAZAAAAAAAAAAUAAAAaAAAAAAAAAAUAAAAbAAAAAAAAAAUAAAAcAAAAAAAAAAUAAAAdAAAAAAAAAAUAAAAeAAAAAAAAAAUAAAAfAAAAAAAAAAUAAAAgAAAAAAAAAAQAAAAIAAEAAAACAAQAAAAJAAEAAAABAAAAAAAKAAEAAAAAAAAAAAALAAEAAAAAAAAAAAAMAAEAAAABAAAAAAANAAEAAAAAAAAAAAAOAAEAAAAAAAAAAAAPAAEAAAABAAAAAAAQAAEAAAADAAQAAAARAAEAAAAAAAAAAAASAAEAAAABAAAAAAATAAEAAAAAAAAAAAAUAAEAAAAAAAAAAAAVAAEAAAABAAAAAAAWAAEAAAAAAAAAAAAXAAEAAAAAAAAAAAAYAAEAAAADAAQAAAAZAAEAAAAEAAAAAAAaAAEAAAAFAAAAAAAbAAEAAAAAAAYAAAAdAAEAAAACAAYAAAAfAAEAAAAEAAAAAAAgAAEAAAABAAQAAAAIAAIAAAACAAQAAAAJAAIAAAABAAEAAAAKAAIAAAAAAAEAAAALAAIAAAAAAAEAAAAMAAIAAAABAAEAAAANAAIAAAAAAAEAAAAOAAIAAAAAAAEAAAAPAAIAAAABAAEAAAAQAAIAAAADAAQAAAARAAIAAAAAAAEAAAASAAIAAAABAAEAAAATAAIAAAAAAAEAAAAUAAIAAAAAAAEAAAAVAAIAAAABAAEAAAAWAAIAAAAAAAEAAAAXAAIAAAAAAAEAAAAYAAIAAAADAAQAAAAZAAIAAAAEAAEAAAAaAAIAAAAFAAEAAAAfAAIAAAAEAAEAAAAgAAIAAAABAAQAAAAIAAMAAAACAAQAAAAJAAMAAAABAAMAAAAKAAMAAAAAAAMAAAALAAMAAAAAAAMAAAAMAAMAAAAAAAMAAAANAAMAAAAAAAMAAAAOAAMAAAAAAAMAAAAPAAMAAAAAAAMAAAAQAAMAAAADAAQAAAARAAMAAAAAAAMAAAASAAMAAAAAAAMAAAATAAMAAAAAAAMAAAAUAAMAAAABAAMAAAAVAAMAAAABAAMAAAAWAAMAAAABAAMAAAAXAAMAAAABAAMAAAAYAAMAAAADAAQAAAAZAAMAAAADAAMAAAAaAAMAAAACAAMAAAAbAAMAAAAHAAIAAAAcAAMAAAAFAAIAAAAdAAMAAAACAAMAAAAeAAMAAAACAAMAAAAfAAMAAAACAAMAAAAgAAMAAAABAAQAAAAIAAQAAAACAAQAAAAJAAQAAAADAAIAAAAKAAQAAAACAAIAAAALAAQAAAADAAIAAAAMAAQAAAAAAAIAAAANAAQAAAACAAIAAAAOAAQAAAACAAIAAAAPAAQAAAACAAIAAAAQAAQAAAADAAQAAAARAAQAAAAAAAIAAAASAAQAAAABAAIAAAATAAQAAAACAAIAAAAUAAQAAAADAAIAAAAVAAQAAAACAAIAAAAWAAQAAAABAAIAAAAXAAQAAAABAAIAAAAYAAQAAAADAAQAAAAZAAQAAAAFAAIAAAAaAAQAAAAEAAIAAAAbAAQAAAAEAAIAAAAcAAQAAAAEAAIAAAAdAAQAAAAEAAIAAAAeAAQAAAAHAAIAAAAfAAQAAAAFAAIAAAAgAAQAAAABAAQAAAAIAAUAAAACAAQAAAAJAAUAAAAAAAIAAAAKAAUAAAABAAIAAAALAAUAAAAAAAIAAAAMAAUAAAACAAIAAAANAAUAAAADAAIAAAAOAAUAAAAAAAIAAAAPAAUAAAABAAIAAAAQAAUAAAADAAQAAAARAAUAAAABAAIAAAASAAUAAAADAAIAAAATAAUAAAAAAAIAAAAUAAUAAAAAAAIAAAAVAAUAAAAAAAIAAAAWAAUAAAABAAIAAAAXAAUAAAABAAIAAAAYAAUAAAADAAQAAAAZAAUAAAAEAAIAAAAaAAUAAAAFAAIAAAAbAAUAAAAFAAIAAAAcAAUAAAAEAAIAAAAdAAUAAAAHAAIAAAAeAAUAAAAEAAIAAAAfAAUAAAAHAAIAAAAgAAUAAAABAAQAAAAIAAYAAAACAAQAAAAJAAYAAAADAAIAAAAKAAYAAAADAAIAAAALAAYAAAACAAIAAAAMAAYAAAABAAIAAAANAAYAAAACAAIAAAAOAAYAAAAAAAIAAAAPAAYAAAAAAAIAAAAQAAYAAAADAAQAAAARAAYAAAABAAIAAAASAAYAAAADAAIAAAATAAYAAAACAAIAAAAUAAYAAAABAAIAAAAVAAYAAAABAAIAAAAWAAYAAAABAAIAAAAXAAYAAAABAAIAAAAYAAYAAAADAAQAAAAZAAYAAAAHAAIAAAAaAAYAAAAEAAIAAAAbAAYAAAAEAAIAAAAcAAYAAAAFAAIAAAAdAAYAAAAGAAIAAAAeAAYAAAAFAAIAAAAfAAYAAAAEAAIAAAAgAAYAAAABAAQAAAAAAAcAAAAAAAQAAAABAAcAAAAAAAUAAAACAAcAAAAAAAUAAAADAAcAAAAAAAUAAAAEAAcAAAAAAAUAAAAFAAcAAAAAAAUAAAAGAAcAAAAAAAUAAAAHAAcAAAAAAAUAAAAIAAcAAAAAAAQAAAALAAcAAAACAAgAAAAQAAcAAAAAAAUAAAATAAcAAAACAAgAAAAYAAcAAAAAAAQAAAAbAAcAAAAEAAIAAAAcAAcAAAAEAAIAAAAgAAcAAAAAAAQAAAAAAAgAAAACAAQAAAABAAgAAAABAAAAAAACAAgAAAAEAAYAAAAEAAgAAAAAAAAAAAAFAAgAAAABAAAAAAAGAAgAAAACAAAAAAAHAAgAAAADAAAAAAAIAAgAAAADAAQAAAAJAAgAAAAEAAAAAAAKAAgAAAAEAAAAAAALAAgAAAAAAAgAAAANAAgAAAAEAAAAAAAOAAgAAAAEAAAAAAAPAAgAAAAEAAAAAAAQAAgAAAAFAAAAAAARAAgAAAAEAAAAAAASAAgAAAAEAAAAAAATAAgAAAAAAAgAAAAVAAgAAAAEAAAAAAAWAAgAAAAEAAAAAAAXAAgAAAAEAAAAAAAYAAgAAAADAAQAAAAZAAgAAAAEAAAAAAAaAAgAAAAGAAgAAAAbAAgAAAAEAAIAAAAcAAgAAAAGAAIAAAAdAAgAAAAHAAgAAAAeAAgAAAAEAAAAAAAfAAgAAAAEAAAAAAAgAAgAAAABAAQAAAAAAAkAAAACAAQAAAABAAkAAAABAAEAAAAEAAkAAAAAAAEAAAAFAAkAAAABAAEAAAAGAAkAAAACAAEAAAAHAAkAAAADAAEAAAAIAAkAAAADAAQAAAAJAAkAAAAEAAEAAAAKAAkAAAAEAAEAAAANAAkAAAAEAAEAAAAOAAkAAAAEAAEAAAAPAAkAAAAEAAEAAAAQAAkAAAAFAAEAAAARAAkAAAAEAAEAAAASAAkAAAAEAAEAAAAVAAkAAAAEAAEAAAAWAAkAAAAEAAEAAAAXAAkAAAAEAAEAAAAYAAkAAAADAAQAAAAZAAkAAAAEAAEAAAAaAAkAAAAGAAkAAAAbAAkAAAAFAAIAAAAcAAkAAAAEAAIAAAAdAAkAAAAHAAkAAAAeAAkAAAAEAAEAAAAfAAkAAAAEAAEAAAAgAAkAAAABAAQAAAAAAAoAAAACAAQAAAABAAoAAAAAAAMAAAACAAoAAAAAAAMAAAADAAoAAAAAAAMAAAAEAAoAAAAAAAMAAAAFAAoAAAAAAAMAAAAGAAoAAAAAAAMAAAAHAAoAAAAAAAMAAAAIAAoAAAADAAUAAAAJAAoAAAADAAMAAAAKAAoAAAADAAMAAAALAAoAAAAFAAIAAAAMAAoAAAAFAAIAAAANAAoAAAACAAMAAAAOAAoAAAACAAMAAAAPAAoAAAACAAMAAAAQAAoAAAACAAMAAAARAAoAAAACAAMAAAASAAoAAAADAAMAAAATAAoAAAAFAAIAAAAUAAoAAAAHAAIAAAAVAAoAAAACAAMAAAAWAAoAAAACAAMAAAAXAAoAAAADAAMAAAAYAAoAAAADAAUAAAAZAAoAAAADAAMAAAAaAAoAAAACAAMAAAAbAAoAAAAHAAIAAAAcAAoAAAAFAAIAAAAdAAoAAAADAAMAAAAeAAoAAAACAAMAAAAfAAoAAAACAAMAAAAgAAoAAAABAAQAAAAAAAsAAAACAAQAAAABAAsAAAACAAIAAAACAAsAAAADAAIAAAADAAsAAAABAAIAAAAEAAsAAAACAAIAAAAFAAsAAAAAAAIAAAAGAAsAAAACAAIAAAAHAAsAAAABAAIAAAAIAAsAAAAEAAMAAAAJAAsAAAAEAAIAAAAKAAsAAAAEAAIAAAALAAsAAAAEAAIAAAAMAAsAAAAHAAIAAAANAAsAAAAFAAIAAAAOAAsAAAAHAAIAAAAPAAsAAAAFAAIAAAAQAAsAAAAEAAIAAAARAAsAAAAEAAIAAAASAAsAAAAFAAIAAAATAAsAAAAGAAIAAAAUAAsAAAAGAAIAAAAVAAsAAAAGAAIAAAAWAAsAAAAEAAIAAAAXAAsAAAAFAAIAAAAYAAsAAAAEAAIAAAAZAAsAAAAFAAIAAAAaAAsAAAAFAAIAAAAbAAsAAAAFAAIAAAAcAAsAAAAEAAIAAAAdAAsAAAAGAAIAAAAeAAsAAAAFAAIAAAAfAAsAAAAHAAIAAAAgAAsAAAABAAQAAAAAAAwAAAACAAQAAAABAAwAAAADAAIAAAACAAwAAAADAAIAAAADAAwAAAADAAIAAAAEAAwAAAABAAIAAAAFAAwAAAAAAAIAAAAGAAwAAAAAAAIAAAAHAAwAAAAAAAIAAAAIAAwAAAAEAAMAAAAJAAwAAAAHAAIAAAAKAAwAAAAEAAIAAAALAAwAAAAEAAIAAAAMAAwAAAAEAAIAAAANAAwAAAAEAAIAAAAOAAwAAAAHAAIAAAAPAAwAAAAEAAIAAAAQAAwAAAAEAAIAAAARAAwAAAAGAAIAAAASAAwAAAAEAAIAAAATAAwAAAAFAAIAAAAUAAwAAAAEAAIAAAAVAAwAAAAEAAIAAAAWAAwAAAAFAAIAAAAXAAwAAAAEAAIAAAAYAAwAAAAEAAIAAAAZAAwAAAAHAAIAAAAaAAwAAAAFAAIAAAAbAAwAAAAHAAIAAAAcAAwAAAAFAAIAAAAdAAwAAAAFAAIAAAAeAAwAAAAFAAIAAAAfAAwAAAAFAAIAAAAgAAwAAAABAAQAAAAAAA0AAAACAAQAAAABAA0AAAABAAIAAAACAA0AAAABAAIAAAADAA0AAAADAAIAAAAEAA0AAAAAAAIAAAAFAA0AAAADAAIAAAAGAA0AAAAAAAIAAAAHAA0AAAAAAAIAAAAZAA0AAAAEAAIAAAAaAA0AAAAHAAIAAAAbAA0AAAAEAAIAAAAcAA0AAAAGAAIAAAAdAA0AAAAFAAIAAAAeAA0AAAAFAAIAAAAfAA0AAAAEAAIAAAAgAA0AAAABAAQAAAAAAA4AAAACAAQAAAABAA4AAAABAAIAAAACAA4AAAAAAAIAAAADAA4AAAABAAIAAAAEAA4AAAACAAIAAAAFAA4AAAADAAIAAAAGAA4AAAADAAIAAAAHAA4AAAAAAAIAAAAIAA4AAAABAAQAAAAYAA4AAAACAAQAAAAZAA4AAAAGAAIAAAAaAA4AAAAFAAIAAAAbAA4AAAAGAAIAAAAcAA4AAAAGAAIAAAAdAA4AAAAFAAIAAAAeAA4AAAAEAAIAAAAfAA4AAAAGAAIAAAAgAA4AAAABAAQAAAAAAA8AAAAAAAQAAAAIAA8AAAAAAAQAAAAYAA8AAAAAAAQAAAAgAA8AAAAAAAQAAAA=")
+tile_set = ExtResource("2_0h2h1")
+
+[node name="WindowSnowClip" type="ColorRect" parent="." unique_id=233161375]
+clip_children = 1
+offset_left = 76.0
+offset_top = 270.0
+offset_right = 116.0
+offset_bottom = 304.0
+
+[node name="WindowSnowParticles" type="CPUParticles2D" parent="WindowSnowClip" unique_id=1596101228]
+material = SubResource("CanvasItemMaterial_6j63b")
+position = Vector2(20, -4)
+amount = 18
+texture = ExtResource("3_apfus")
+lifetime = 3.0
+preprocess = 2.0
+emission_shape = 3
+emission_rect_extents = Vector2(22, 2)
+direction = Vector2(-0.35, 1)
+spread = 18.0
+gravity = Vector2(-2, 14)
+initial_velocity_min = 8.0
+initial_velocity_max = 15.0
+scale_amount_min = 0.28
+scale_amount_max = 0.58
+color = Color(0.92, 0.96, 1, 0.72)
+color_ramp = SubResource("Gradient_4cmro")
+
+[node name="WindowMorningLight" type="PointLight2D" parent="." unique_id=1728927555]
+position = Vector2(102, 306)
+color = Color(0.68, 0.83, 1, 1)
+energy = 0.94
+shadow_enabled = true
+shadow_color = Color(0.03, 0.04, 0.08, 0.72)
+shadow_filter = 2
+shadow_filter_smooth = 3.6
+texture = ExtResource("4_rclfi")
+texture_scale = 1.65
+height = 38.0
+
+[node name="HallwayWarmLight" type="PointLight2D" parent="." unique_id=1182288240]
+position = Vector2(496, 348)
+color = Color(0.98, 0.81, 0.6, 1)
+energy = 0.96
+shadow_enabled = true
+shadow_color = Color(0.04, 0.03, 0.06, 0.74)
+shadow_filter = 2
+shadow_filter_smooth = 3.8
+texture = ExtResource("5_786is")
+texture_scale = 2.65
+height = 42.0
+
+[node name="EntryLight" type="PointLight2D" parent="." unique_id=1941873453]
+position = Vector2(896, 146)
+color = Color(0.74, 0.84, 0.98, 1)
+energy = 0.82
+shadow_enabled = true
+shadow_color = Color(0.03, 0.04, 0.07, 0.72)
+shadow_filter = 2
+shadow_filter_smooth = 3.8
+texture = ExtResource("5_786is")
+texture_scale = 2.2
+height = 40.0
+
+[node name="KitchenLight" type="PointLight2D" parent="." unique_id=402590092]
+position = Vector2(928, 382)
+color = Color(1, 0.83, 0.6, 1)
+energy = 0.94
+shadow_enabled = true
+shadow_color = Color(0.04, 0.03, 0.05, 0.74)
+shadow_filter = 2
+shadow_filter_smooth = 3.8
+texture = ExtResource("5_786is")
+texture_scale = 2.4
+height = 42.0
+
+[node name="BrotherRoomLight" type="PointLight2D" parent="." unique_id=1182591951]
+position = Vector2(392, 164)
+color = Color(0.68, 0.8, 0.96, 1)
+energy = 0.82
+shadow_enabled = true
+shadow_color = Color(0.03, 0.04, 0.07, 0.74)
+shadow_filter = 2
+shadow_filter_smooth = 3.8
+texture = ExtResource("5_786is")
+texture_scale = 2.35
+height = 40.0
+
+[node name="ParentsRoomLight" type="PointLight2D" parent="." unique_id=424232395]
+position = Vector2(648, 164)
+color = Color(0.86, 0.8, 0.74, 1)
+energy = 0.76
+shadow_enabled = true
+shadow_color = Color(0.04, 0.04, 0.07, 0.74)
+shadow_filter = 2
+shadow_filter_smooth = 3.8
+texture = ExtResource("5_786is")
+texture_scale = 2.25
+height = 40.0
+
+[node name="YSort" type="Node2D" parent="." unique_id=2028829347]
+y_sort_enabled = true
+
+[node name="WallTopMap" type="TileMapLayer" parent="YSort" unique_id=545101388]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAAJAAcAAAAEAAUAAAAKAAcAAAAEAAUAAAALAAcAAAAEAAgAAAANAAcAAAAEAAUAAAAOAAcAAAAEAAUAAAAPAAcAAAAEAAUAAAARAAcAAAAEAAUAAAASAAcAAAAEAAUAAAATAAcAAAAEAAgAAAAVAAcAAAAEAAUAAAAWAAcAAAAEAAUAAAAXAAcAAAAEAAUAAAAZAAcAAAAEAAUAAAAaAAcAAAAGAAUAAAAdAAcAAAAFAAUAAAAeAAcAAAAEAAUAAAAfAAcAAAAEAAUAAAAIAA0AAAAFAAQAAAAJAA0AAAAEAAQAAAAKAA0AAAAEAAQAAAALAA0AAAAEAAQAAAAMAA0AAAAEAAQAAAANAA0AAAAEAAQAAAAOAA0AAAAEAAQAAAAPAA0AAAAEAAQAAAAQAA0AAAAEAAQAAAARAA0AAAAEAAQAAAASAA0AAAAEAAQAAAATAA0AAAAEAAQAAAAUAA0AAAAEAAQAAAAVAA0AAAAEAAQAAAAWAA0AAAAEAAQAAAAXAA0AAAAEAAQAAAAYAA0AAAAGAAQAAAABAA8AAAAEAAQAAAACAA8AAAAEAAQAAAADAA8AAAAEAAQAAAAEAA8AAAAEAAQAAAAFAA8AAAAEAAQAAAAGAA8AAAAEAAQAAAAHAA8AAAAEAAQAAAAZAA8AAAAEAAQAAAAaAA8AAAAEAAQAAAAbAA8AAAAEAAQAAAAcAA8AAAAEAAQAAAAdAA8AAAAEAAQAAAAeAA8AAAAEAAQAAAAfAA8AAAAEAAQAAAA=")
+tile_set = ExtResource("2_0h2h1")
+
+[node name="FurnitureMap" type="TileMapLayer" parent="YSort" unique_id=444313985]
+y_sort_enabled = true
+tile_set = ExtResource("6_7cfhd")
+
+[node name="PropsMap" type="TileMapLayer" parent="YSort" unique_id=181721774]
+y_sort_enabled = true
+tile_set = ExtResource("7_wrbt3")
+
+[node name="SingleBed" type="StaticBody2D" parent="YSort" unique_id=1264600830]
+position = Vector2(58, 404)
+
+[node name="Sprite2D" type="Sprite2D" parent="YSort/SingleBed" unique_id=1664970287]
+texture = ExtResource("8_lehf1")
+offset = Vector2(0, -48)
+region_enabled = true
+region_rect = Rect2(0, 0, 64, 96)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/SingleBed" unique_id=426757599]
+position = Vector2(0, -29)
+shape = SubResource("RectangleShape2D_h036i")
+
+[node name="DynamicShadow" type="Node2D" parent="YSort/SingleBed" unique_id=1698982214]
+script = ExtResource("9_e1uhb")
+contact_size = Vector2(42, 62)
+contact_offset = Vector2(0, -30)
+cast_radius = Vector2(18, 22)
+cast_max_length = 11.0
+cast_alpha = 0.16
+is_rect_contact = true
+
+[node name="SimpleDesk" type="StaticBody2D" parent="YSort" unique_id=1168788349]
+position = Vector2(194, 344)
+
+[node name="Sprite2D" type="Sprite2D" parent="YSort/SimpleDesk" unique_id=387639598]
+texture = ExtResource("8_lehf1")
+offset = Vector2(0, -32)
+region_enabled = true
+region_rect = Rect2(64, 0, 96, 64)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/SimpleDesk" unique_id=488550292]
+position = Vector2(0, -9)
+shape = SubResource("RectangleShape2D_kfcv1")
+
+[node name="DynamicShadow" type="Node2D" parent="YSort/SimpleDesk" unique_id=525747413]
+script = ExtResource("9_e1uhb")
+contact_size = Vector2(56, 18)
+contact_offset = Vector2(1, -6)
+contact_alpha = 0.46
+cast_radius = Vector2(20, 8)
+cast_max_length = 10.0
+cast_alpha = 0.18
+is_rect_contact = true
+
+[node name="DeskLampLight" type="PointLight2D" parent="YSort/SimpleDesk" unique_id=538615719]
+position = Vector2(15, -24)
+color = Color(1, 0.76, 0.44, 1)
+energy = 0.96
+shadow_enabled = true
+shadow_color = Color(0.04, 0.03, 0.05, 0.65)
+shadow_filter = 2
+shadow_filter_smooth = 2.8
+texture = ExtResource("10_pndv8")
+texture_scale = 1.55
+height = 28.0
+
+[node name="DeskLampCoreHalo" type="PointLight2D" parent="YSort/SimpleDesk" unique_id=1767018232]
+position = Vector2(18, -44)
+color = Color(1, 0.88, 0.62, 1)
+energy = 0.28
+texture = ExtResource("5_786is")
+texture_scale = 0.42
+height = 14.0
+
+[node name="LaptopScreenGlow" type="PointLight2D" parent="YSort/SimpleDesk" unique_id=793884396]
+position = Vector2(3, -39)
+color = Color(0.42, 0.76, 1, 1)
+energy = 0.34
+texture = ExtResource("5_786is")
+texture_scale = 0.62
+height = 16.0
+
+[node name="DeskChair" type="StaticBody2D" parent="YSort" unique_id=1741845333]
+position = Vector2(188, 362)
+
+[node name="Sprite2D" type="Sprite2D" parent="YSort/DeskChair" unique_id=986530329]
+texture = ExtResource("8_lehf1")
+offset = Vector2(0, -32)
+region_enabled = true
+region_rect = Rect2(128, 64, 32, 64)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/DeskChair" unique_id=1319374206]
+position = Vector2(0, -5)
+shape = SubResource("RectangleShape2D_e3v35")
+
+[node name="DynamicShadow" type="Node2D" parent="YSort/DeskChair" unique_id=951925989]
+script = ExtResource("9_e1uhb")
+contact_size = Vector2(16, 8)
+contact_offset = Vector2(0, -3)
+cast_radius = Vector2(7, 4)
+cast_max_length = 12.0
+cast_alpha = 0.22
+
+[node name="KitchenWallUnit" type="StaticBody2D" parent="YSort" unique_id=1807301261]
+position = Vector2(976, 340)
+
+[node name="Sprite2D" type="Sprite2D" parent="YSort/KitchenWallUnit" unique_id=1800316622]
+texture = ExtResource("8_lehf1")
+offset = Vector2(0, -48)
+region_enabled = true
+region_rect = Rect2(0, 96, 96, 96)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/KitchenWallUnit" unique_id=912594085]
+position = Vector2(0, -10)
+shape = SubResource("RectangleShape2D_kvwkq")
+
+[node name="DynamicShadow" type="Node2D" parent="YSort/KitchenWallUnit" unique_id=401004383]
+script = ExtResource("9_e1uhb")
+contact_size = Vector2(78, 14)
+contact_offset = Vector2(0, -5)
+contact_alpha = 0.44
+cast_enabled = false
+cast_radius = Vector2(20, 8)
+cast_max_length = 8.0
+cast_alpha = 0.16
+is_rect_contact = true
+
+[node name="KitchenTable" type="StaticBody2D" parent="YSort" unique_id=1824676646]
+position = Vector2(936, 432)
+
+[node name="Sprite2D" type="Sprite2D" parent="YSort/KitchenTable" unique_id=43096314]
+texture = ExtResource("8_lehf1")
+offset = Vector2(0, -32)
+region_enabled = true
+region_rect = Rect2(192, 128, 64, 64)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/KitchenTable" unique_id=615917726]
+position = Vector2(0, -12)
+shape = SubResource("RectangleShape2D_jwgin")
+
+[node name="DynamicShadow" type="Node2D" parent="YSort/KitchenTable" unique_id=1985619999]
+script = ExtResource("9_e1uhb")
+contact_size = Vector2(56, 22)
+contact_offset = Vector2(0, -9)
+contact_alpha = 0.46
+cast_radius = Vector2(20, 10)
+cast_max_length = 11.0
+cast_alpha = 0.2
+is_rect_contact = true
+
+[node name="KitchenChairLeft" type="StaticBody2D" parent="YSort" unique_id=998365765]
+position = Vector2(894, 426)
+
+[node name="Sprite2D" type="Sprite2D" parent="YSort/KitchenChairLeft" unique_id=2132974545]
+texture = ExtResource("8_lehf1")
+offset = Vector2(0, -32)
+region_enabled = true
+region_rect = Rect2(256, 64, 32, 64)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/KitchenChairLeft" unique_id=2034922429]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_3tucr")
+
+[node name="DynamicShadow" type="Node2D" parent="YSort/KitchenChairLeft" unique_id=1792790626]
+script = ExtResource("9_e1uhb")
+contact_size = Vector2(15, 8)
+contact_offset = Vector2(0, -3)
+cast_radius = Vector2(7, 4)
+cast_max_length = 12.0
+cast_alpha = 0.22
+
+[node name="KitchenChairRight" type="StaticBody2D" parent="YSort" unique_id=1813941777]
+position = Vector2(978, 426)
+
+[node name="Sprite2D" type="Sprite2D" parent="YSort/KitchenChairRight" unique_id=1698441318]
+texture = ExtResource("8_lehf1")
+offset = Vector2(0, -32)
+region_enabled = true
+region_rect = Rect2(288, 64, 32, 64)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/KitchenChairRight" unique_id=1422353855]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_6rmph")
+
+[node name="DynamicShadow" type="Node2D" parent="YSort/KitchenChairRight" unique_id=90134211]
+script = ExtResource("9_e1uhb")
+contact_size = Vector2(15, 8)
+contact_offset = Vector2(0, -3)
+cast_radius = Vector2(7, 4)
+cast_max_length = 12.0
+cast_alpha = 0.22
+
+[node name="Player" type="CharacterBody2D" parent="YSort" unique_id=1414919714]
+position = Vector2(104, 384)
+motion_mode = 1
+script = ExtResource("11_1qyui")
+
+[node name="DynamicShadow" type="Node2D" parent="YSort/Player" unique_id=44367398]
+script = ExtResource("9_e1uhb")
+contact_size = Vector2(16, 7)
+contact_offset = Vector2(0, 0)
+contact_alpha = 0.56
+cast_radius = Vector2(7.5, 4.5)
+cast_max_length = 24.0
+cast_alpha = 0.44
+
+[node name="Sprite2D" type="Sprite2D" parent="YSort/Player" unique_id=475417929]
+texture = ExtResource("12_a2oq8")
+offset = Vector2(0, -18)
+hframes = 3
+vframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="YSort/Player" unique_id=62484895]
+position = Vector2(0, -4)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_r1bfd")
+
+[node name="Camera2D" type="Camera2D" parent="YSort/Player" unique_id=939952810]
+position = Vector2(0, -18)
+zoom = Vector2(3, 3)
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
+
+[node name="AmbientHeroLight" type="PointLight2D" parent="YSort/Player" unique_id=233751899]
+position = Vector2(0, -18)
+color = Color(0.8, 0.84, 0.92, 1)
+energy = 0.16
+texture = ExtResource("5_786is")
+texture_scale = 0.95
+height = 26.0
+
+[node name="WindowGodRays" type="ColorRect" parent="." unique_id=435611853]
+material = SubResource("ShaderMaterial_ob88h")
+offset_left = 60.0
+offset_top = 268.0
+offset_right = 176.0
+offset_bottom = 386.0
+mouse_filter = 2
+
+[node name="MorningDustMotes" type="CPUParticles2D" parent="." unique_id=80000284]
+material = SubResource("CanvasItemMaterial_5mo67")
+position = Vector2(132, 332)
+amount = 14
+texture = ExtResource("3_apfus")
+lifetime = 5.5
+preprocess = 3.0
+emission_shape = 3
+emission_rect_extents = Vector2(76, 44)
+direction = Vector2(0.4, -0.2)
+spread = 35.0
+gravity = Vector2(0.5, -1.2)
+initial_velocity_min = 1.5
+initial_velocity_max = 4.5
+scale_amount_min = 0.16
+scale_amount_max = 0.34
+color_ramp = SubResource("Gradient_le556")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=429873564]
+color = Color(0.41, 0.45, 0.55, 1)
+
+[node name="AtmosphereLayer" type="CanvasLayer" parent="." unique_id=373933902]
+
+[node name="FilmEffect" type="ColorRect" parent="AtmosphereLayer" unique_id=1495573445]
+material = SubResource("ShaderMaterial_cml3x")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="TransitionLayer" type="CanvasLayer" parent="." unique_id=1819735129]
+layer = 10
+
+[node name="FadeOverlay" type="ColorRect" parent="TransitionLayer" unique_id=1553363783]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0.025, 0.025, 0.035, 1)

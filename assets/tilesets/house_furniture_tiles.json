@@ -1,0 +1,464 @@
+{
+ "tile_size": 32,
+ "grid": [
+  10,
+  8
+ ],
+ "tiles": {
+  "single_bed": {
+   "atlas": [
+    0,
+    0
+   ],
+   "size": [
+    2,
+    3
+   ],
+   "sprite_size": [
+    44,
+    80
+   ],
+   "paste_offset": [
+    10,
+    16
+   ],
+   "region_rect": [
+    0,
+    0,
+    64,
+    96
+   ],
+   "rug": false,
+   "col_rect": [
+    -20,
+    -58,
+    20,
+    0
+   ]
+  },
+  "simple_desk": {
+   "atlas": [
+    2,
+    0
+   ],
+   "size": [
+    3,
+    2
+   ],
+   "sprite_size": [
+    66,
+    52
+   ],
+   "paste_offset": [
+    15,
+    12
+   ],
+   "region_rect": [
+    64,
+    0,
+    96,
+    64
+   ],
+   "rug": false,
+   "col_rect": [
+    -30,
+    -18,
+    30,
+    0
+   ]
+  },
+  "composer_desk": {
+   "atlas": [
+    5,
+    0
+   ],
+   "size": [
+    3,
+    2
+   ],
+   "sprite_size": [
+    66,
+    52
+   ],
+   "paste_offset": [
+    15,
+    12
+   ],
+   "region_rect": [
+    160,
+    0,
+    96,
+    64
+   ],
+   "rug": false,
+   "col_rect": [
+    -30,
+    -18,
+    30,
+    0
+   ]
+  },
+  "upright_piano": {
+   "atlas": [
+    8,
+    0
+   ],
+   "size": [
+    2,
+    2
+   ],
+   "sprite_size": [
+    62,
+    52
+   ],
+   "paste_offset": [
+    1,
+    12
+   ],
+   "region_rect": [
+    256,
+    0,
+    64,
+    64
+   ],
+   "rug": false,
+   "col_rect": [
+    -30,
+    -20,
+    30,
+    0
+   ]
+  },
+  "stool": {
+   "atlas": [
+    2,
+    2
+   ],
+   "size": [
+    1,
+    1
+   ],
+   "sprite_size": [
+    19,
+    26
+   ],
+   "paste_offset": [
+    6,
+    6
+   ],
+   "region_rect": [
+    64,
+    64,
+    32,
+    32
+   ],
+   "rug": false,
+   "col_rect": [
+    -8,
+    -12,
+    8,
+    0
+   ]
+  },
+  "backpack": {
+   "atlas": [
+    3,
+    2
+   ],
+   "size": [
+    1,
+    1
+   ],
+   "sprite_size": [
+    23,
+    26
+   ],
+   "paste_offset": [
+    4,
+    6
+   ],
+   "region_rect": [
+    96,
+    64,
+    32,
+    32
+   ],
+   "rug": false,
+   "col_rect": [
+    -10,
+    -12,
+    10,
+    0
+   ]
+  },
+  "desk_chair": {
+   "atlas": [
+    4,
+    2
+   ],
+   "size": [
+    1,
+    2
+   ],
+   "sprite_size": [
+    19,
+    42
+   ],
+   "paste_offset": [
+    6,
+    22
+   ],
+   "region_rect": [
+    128,
+    64,
+    32,
+    64
+   ],
+   "rug": false,
+   "col_rect": [
+    -8,
+    -10,
+    7,
+    0
+   ]
+  },
+  "bookcase": {
+   "atlas": [
+    5,
+    2
+   ],
+   "size": [
+    1,
+    3
+   ],
+   "sprite_size": [
+    26,
+    80
+   ],
+   "paste_offset": [
+    3,
+    16
+   ],
+   "region_rect": [
+    160,
+    64,
+    32,
+    96
+   ],
+   "rug": false,
+   "col_rect": [
+    -13,
+    -18,
+    13,
+    0
+   ]
+  },
+  "worn_piano": {
+   "atlas": [
+    6,
+    2
+   ],
+   "size": [
+    2,
+    2
+   ],
+   "sprite_size": [
+    62,
+    52
+   ],
+   "paste_offset": [
+    1,
+    12
+   ],
+   "region_rect": [
+    192,
+    64,
+    64,
+    64
+   ],
+   "rug": false,
+   "col_rect": [
+    -30,
+    -20,
+    30,
+    0
+   ]
+  },
+  "kitchen_chair_r": {
+   "atlas": [
+    8,
+    2
+   ],
+   "size": [
+    1,
+    2
+   ],
+   "sprite_size": [
+    17,
+    38
+   ],
+   "paste_offset": [
+    7,
+    26
+   ],
+   "region_rect": [
+    256,
+    64,
+    32,
+    64
+   ],
+   "rug": false,
+   "col_rect": [
+    -7,
+    -12,
+    7,
+    0
+   ]
+  },
+  "kitchen_chair_l": {
+   "atlas": [
+    9,
+    2
+   ],
+   "size": [
+    1,
+    2
+   ],
+   "sprite_size": [
+    17,
+    38
+   ],
+   "paste_offset": [
+    7,
+    26
+   ],
+   "region_rect": [
+    288,
+    64,
+    32,
+    64
+   ],
+   "rug": false,
+   "col_rect": [
+    -7,
+    -12,
+    7,
+    0
+   ]
+  },
+  "kitchen_wall_unit": {
+   "atlas": [
+    0,
+    3
+   ],
+   "size": [
+    3,
+    3
+   ],
+   "sprite_size": [
+    76,
+    72
+   ],
+   "paste_offset": [
+    10,
+    24
+   ],
+   "region_rect": [
+    0,
+    96,
+    96,
+    96
+   ],
+   "rug": false,
+   "col_rect": [
+    -38,
+    -20,
+    38,
+    0
+   ]
+  },
+  "kitchen_table": {
+   "atlas": [
+    6,
+    4
+   ],
+   "size": [
+    2,
+    2
+   ],
+   "sprite_size": [
+    62,
+    46
+   ],
+   "paste_offset": [
+    1,
+    18
+   ],
+   "region_rect": [
+    192,
+    128,
+    64,
+    64
+   ],
+   "rug": false,
+   "col_rect": [
+    -28,
+    -24,
+    28,
+    0
+   ]
+  },
+  "hallway_runner_rug": {
+   "atlas": [
+    0,
+    6
+   ],
+   "size": [
+    6,
+    2
+   ],
+   "sprite_size": [
+    192,
+    46
+   ],
+   "paste_offset": [
+    0,
+    9
+   ],
+   "region_rect": [
+    0,
+    192,
+    192,
+    64
+   ],
+   "rug": true,
+   "col_rect": null
+  },
+  "piano_trio_rug": {
+   "atlas": [
+    6,
+    6
+   ],
+   "size": [
+    4,
+    2
+   ],
+   "sprite_size": [
+    122,
+    62
+   ],
+   "paste_offset": [
+    3,
+    1
+   ],
+   "region_rect": [
+    192,
+    192,
+    128,
+    64
+   ],
+   "rug": true,
+   "col_rect": null
+  }
+ }
+}

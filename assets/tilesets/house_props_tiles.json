@@ -1,0 +1,174 @@
+{
+ "tile_size": 32,
+ "grid": [
+  8,
+  2
+ ],
+ "tiles": {
+  "oil_lamp_lit": {
+   "atlas": [
+    0,
+    0
+   ],
+   "size": [
+    1,
+    1
+   ],
+   "bottom_align": true
+  },
+  "oil_lamp_off": {
+   "atlas": [
+    1,
+    0
+   ],
+   "size": [
+    1,
+    1
+   ],
+   "bottom_align": true
+  },
+  "book_open": {
+   "atlas": [
+    2,
+    0
+   ],
+   "size": [
+    1,
+    1
+   ],
+   "bottom_align": false
+  },
+  "book_closed": {
+   "atlas": [
+    3,
+    0
+   ],
+   "size": [
+    1,
+    1
+   ],
+   "bottom_align": false
+  },
+  "book_stack_2": {
+   "atlas": [
+    4,
+    0
+   ],
+   "size": [
+    1,
+    1
+   ],
+   "bottom_align": true
+  },
+  "book_stack_3": {
+   "atlas": [
+    5,
+    0
+   ],
+   "size": [
+    1,
+    1
+   ],
+   "bottom_align": true
+  },
+  "sheet_loose": {
+   "atlas": [
+    6,
+    0
+   ],
+   "size": [
+    1,
+    1
+   ],
+   "bottom_align": false
+  },
+  "note_pinned": {
+   "atlas": [
+    7,
+    0
+   ],
+   "size": [
+    1,
+    1
+   ],
+   "bottom_align": false
+  },
+  "notes_double": {
+   "atlas": [
+    0,
+    1
+   ],
+   "size": [
+    1,
+    1
+   ],
+   "bottom_align": false
+  },
+  "sheet_pinned_1": {
+   "atlas": [
+    1,
+    1
+   ],
+   "size": [
+    1,
+    1
+   ],
+   "bottom_align": false
+  },
+  "sheet_pinned_2": {
+   "atlas": [
+    2,
+    1
+   ],
+   "size": [
+    1,
+    1
+   ],
+   "bottom_align": false
+  },
+  "composer_bust": {
+   "atlas": [
+    3,
+    1
+   ],
+   "size": [
+    1,
+    1
+   ],
+   "bottom_align": true
+  },
+  "vase_blossom": {
+   "atlas": [
+    4,
+    1
+   ],
+   "size": [
+    1,
+    1
+   ],
+   "bottom_align": true
+  },
+  "vase_twigs": {
+   "atlas": [
+    5,
+    1
+   ],
+   "size": [
+    1,
+    1
+   ],
+   "bottom_align": true
+  },
+  "petals_scatter": {
+   "atlas": [
+    6,
+    1
+   ],
+   "size": [
+    1,
+    1
+   ],
+   "bottom_align": false
+  }
+ }
+}
