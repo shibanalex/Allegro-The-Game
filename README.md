@@ -3,10 +3,9 @@
 ![Godot 4.7+](https://img.shields.io/badge/Godot-4.7%2B-478cbf?style=flat-square)
 ![GDScript](https://img.shields.io/badge/GDScript-Forward%2B-355570?style=flat-square)
 ![Python Tools](https://img.shields.io/badge/Tools-Python%203.12%2B-3776ab?style=flat-square)
+![Status](https://img.shields.io/badge/Status-Early%20Prototype-b45309?style=flat-square)
 
-A 2D narrative RPG built in Godot 4 with an original classical soundtrack,
-custom GLSL post-processing shaders, and a Python/Pillow asset pipeline for
-3/4 top-down pixel-snapped scenes with painterly interior shading.
+An early-stage 2D narrative RPG prototype built in Godot 4 (currently a single playable room vertical slice) with an original classical soundtrack, custom GLSL post-processing shaders, and a Python/Pillow asset pipeline for 3/4 top-down pixel-snapped scenes with painterly interior shading.
 
 <p align="center">
   <img src="assets/tilesets/boy_room_canvas.png" alt="Composer room backdrop" width="520" />
