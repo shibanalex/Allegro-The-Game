@@ -1,20 +1,60 @@
 # Allegro: The Game
 
-An atmospheric narrative **2D RPG** built in **Godot 4** with an original classical soundtrack, custom GLSL shaders, and a hybrid **Painterly Pixel Art** pipeline in orthogonal `3/4` projection.
+![Godot 4.7+](https://img.shields.io/badge/Godot-4.7%2B-478cbf?style=flat-square)
+![GDScript](https://img.shields.io/badge/GDScript-Forward%2B-355570?style=flat-square)
+![Python Tools](https://img.shields.io/badge/Tools-Python%203.12%2B-3776ab?style=flat-square)
 
-## Technical & Artistic Highlights
+A 2D narrative RPG built in Godot 4 with an original classical soundtrack,
+custom GLSL post-processing shaders, and a Python/Pillow asset pipeline for
+3/4 top-down pixel-snapped scenes with painterly interior shading.
 
-- **Painterly Pixel Art Pipeline (`tools/`):** Custom Python scripts (`Pillow` / `NumPy`) for perspective deskewing, sepia/walnut palette harmonization (`assets/allegro_sepia_score.gpl`), normal-map syncing, and crisp `1 px` silhouette extraction while preserving painterly interior brushstrokes.
-- **Custom Godot Shaders & Atmosphere (`assets/shaders/`, `scripts/`):**
-  - Night film grain & vignette shader
-  - Monochrome 4-tone Bayer `4×4` dithered cutscene aesthetic (`320×180`)
-  - Dynamic 2D lighting, soft shadows (`dynamic_shadow.gd`), and frameless gradient `InteractionBox`
-- **Original Classical Score:** Composed in MuseScore 4 and humanized with custom Python continuous-controller (`CC1` / `CC11`) expression scripts.
+<p align="center">
+  <img src="assets/tilesets/boy_room_canvas.png" alt="Composer room backdrop" width="520" />
+  <img src="assets/portraits/hero_allegro_portrait.png" alt="Protagonist portrait" width="140" />
+</p>
 
-## Structure
+## Architecture
 
-- `scripts/` — Player controller (alternating footstep cadence, pixel-precise movement), atmosphere, cutscenes, audio bus & interaction UI
-- `assets/shaders/` — Custom Godot 4 canvas shaders
-- `assets/characters/`, `assets/tilesets/` — Original character sprite sheets and room tilesets
-- `tools/` — Python & editor scripts for procedural asset/tileset assembly and collision verification
-- `*.tscn` — Main room, modular dorm/house, title screen, and intro cutscene scenes
+The project separates runtime gameplay in GDScript from offline asset
+compilation in Python:
+
+| Path | Role |
+|---|---|
+| `title_screen.tscn`, `scripts/title_screen.gd` | Title screen with asynchronous background scene preloading |
+| `intro_cutscene.tscn`, `scripts/intro_cutscene.gd` | 7 AM waking sequence in 4-tone Bayer 4x4 dithering (`320x180`) |
+| `house_modular.tscn`, `dorm_modular.tscn` | Playable Y-sorted interiors with wall occluders and `PointLight2D` |
+| `scripts/player.gd` | 4-direction movement with alternating stride phase and footstep pitch jitter |
+| `scripts/room_atmosphere.gd` | Dynamic tungsten lamp toggle, window cloud drift, dust particles |
+| `scripts/dynamic_shadow.gd` | Contact shadows and real-time directional cast shadows from light sources |
+| `assets/shaders/` | Canvas shaders (`night_film.gdshader`, `bayer_cutscene.gdshader`) |
+| `tools/` | Python (`Pillow`, `numpy`) and editor scripts for atlas slicing, deskewing, and normal maps |
+
+## Asset Pipeline
+
+Paintings and sprite sheets are processed into Godot-ready atlases using the
+scripts under `tools/`:
+
+- `clean_hero_sheet.py`: extracts `48x48` character frames into a `3x4` sheet
+  (`assets/characters/hero_allegro_sheet.png`) while locking head alignment
+  across stride frames.
+- `polish_sprites.py`: downscales painterly crops with Lanczos inside the shape
+  while snapping outer silhouettes cleanly at `Nearest` resolution and syncing
+  palette tones against `assets/allegro_sepia_score.gpl`.
+- `build_house_tileset.py`, `build_dorm_tileset_a.py`, `build_lighting_assets.py`:
+  compile modular room atlases and radial/beam light textures.
+- `sync_normals.py`: keeps sprite normal maps aligned with atlas coordinates.
+
+Detailed palette values and canvas conventions live in [STYLE_GUIDE.md](STYLE_GUIDE.md).
+
+## Running Locally
+
+Open `project.godot` in Godot 4.7 or newer and press Play (`title_screen.tscn`
+is the configured main scene).
+
+To run the offline asset tools:
+
+```bash
+python3 -m venv .venv
+.venv/bin/pip install pillow numpy
+.venv/bin/python tools/clean_hero_sheet.py
+```

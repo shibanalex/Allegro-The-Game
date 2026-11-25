@@ -131,7 +131,7 @@ func _item_at_pos(pos: Vector2) -> int:
 func _draw() -> void:
 	var sz := get_rect().size
 
-	# Subtle title typography in the upper third with rich shadow for effortless legibility
+	# Title text with drop shadow
 	if font != null:
 		var title := "Allegro"
 		var title_size := 64

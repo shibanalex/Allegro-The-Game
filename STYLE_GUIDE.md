@@ -1,18 +1,15 @@
-# Визуальный стиль — Allegro_The_Game
+# Visual Style Guide
 
-## 1. Формула стиля
-- **Мир (Top-down):** чёткий пиксель-арт (`Nearest`, сетка `16×16` тайлы, `48×48` персонаж). Минимум шума — атмосферу задаёт цвет и свет.
-- **Диалоги (главная авторская фишка):** крупные выразительные портреты **твоей рукой в Krita** (нажим пера, живая тушь, уголь, скринтоны).
-- **Сны и кошмары:** фотоколлажи в Krita (реальные фото фактур пианино, рук, нот, стен → обесцветить → тонировать в сепию + Posterize/дизеринг).
-- **Постобработка в Godot:** тёплая полутьма (`CanvasModulate`), локальные пятна света (`PointLight2D`), мягкая виньетка и лёгкое зерно/CRT-эффект.
+## Art Direction
 
-## 2. Единая палитра (`Allegro — Партитура и Сон`)
-Палитра уже установлена в Krita (`allegro_sepia_score.gpl`):
-- **Бумага и свет:** `#f4ecd8`, `#e1d4ba`, `#c6b497`, `#9e8b70`
-- **Тушь и дерево:** `#75604a`, `#524133`, `#362a24`, `#1a1514`
-- **Уставший холод (сон и одежда):** `#a8adb0`, `#6c747d`, `#3d424d`, `#21232e`
-- **Редкие акценты (не больше 10% кадра):** алый `#b03636`, кармин `#781c20`, лампа `#d9a661`
+1. World (top-down 3/4): pixel-snapped sprites (`Nearest` filter, `16x16` base grid, `48x48` character cells) with painterly shading inside silhouettes.
+2. Dialogue portraits: hand-inked `512x512` portraits in Krita using a 3-4 tone range (sepia paper base, ink contour, charcoal/screentone shadow, sparse warm highlights).
+3. Cutscenes: monochrome 4-tone Bayer `4x4` dithered scenes rendered at `320x180`.
+4. Lighting: `CanvasModulate` dusk tint paired with directional `PointLight2D` sources and wall `LightOccluder2D` geometry.
 
-## 3. Шпаргалка по холстам и кистям в Krita
-- **Портрет в диалог:** холст `512×512 px` (в игре ужимается аккуратно или показывается в окне диалога). Рисовать в 3–4 тона: *базовая бумага/сепия → тушевой контур (`deevad 1e inking gpen`) → тень углём или скринтоном (`h) Charcoal RazcoreRad` / `deevad 5c screentones`) → редкий алый/световой акцент*.
-- **Спрайты и предметы в комнату:** кратно `16 px` (`16×16`, `32×32`, `48×48`), кисть `Gdquest_PixelArt_OnePixel`, контур `#362a24` или `#1a1514` (не чисто чёрный), при масштабировании — строго `Nearest Neighbor`.
+## Color Palette (`assets/allegro_sepia_score.gpl`)
+
+- Paper and highlights: `#f4ecd8`, `#e1d4ba`, `#c6b497`, `#9e8b70`
+- Ink and walnut wood: `#75604a`, `#524133`, `#362a24`, `#1a1514`
+- Cold shadows: `#a8adb0`, `#6c747d`, `#3d424d`, `#21232e`
+- Accents (kept below 10% of frame): `#b03636`, `#781c20`, `#d9a661`

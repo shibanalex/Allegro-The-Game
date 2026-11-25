@@ -1,5 +1,5 @@
 extends Node
-## Звуковой менеджер с оригинальными сэмплами RPG Maker MV (Cursor1, Decision1, Cancel1, Buzzer1, Book1)
+## Audio manager for UI cues, footsteps, and BGM playback.
 
 var _se_cursor: AudioStream
 var _se_decision: AudioStream

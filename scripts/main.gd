@@ -92,30 +92,25 @@ func _ready() -> void:
 		{
 			"speaker": "Алексей",
 			"face": 4,
-			"text": "Я исправила все микродетали, которые выдавали подделку:\n• Родной шрифт mplus-1m-regular.ttf и окно 1:1 (816×624)\n• Поклеточный шаг по сетке 48×48 и раскрытие окна диалога по вертикали"
-		},
-		{
-			"speaker": "Алексей",
-			"face": 4,
-			"text": "• Настоящие стены с потолочным срезом из Inside_A4 и классической тенью 24px слева\n• Правильный тайлинг полосок Window.png и тихий быстрый вывод текста без пищалки."
+			"text": "Семь утра. За окном серо, а партитура трио всё ещё не дописана."
 		}
 	])
 
 
 func _setup_collision_and_events() -> void:
-	# Книжные шкафы (cols 3..6, row 4)
+	# Bookshelves (cols 3..6, row 4)
 	for c in range(3, 7):
 		blocked_cells[Vector2i(c, 4)] = true
 		event_cells[Vector2i(c, 4)] = "bookshelf"
-	# Камин (cols 7..9, row 4)
+	# Fireplace (cols 7..9, row 4)
 	for c in range(7, 10):
 		blocked_cells[Vector2i(c, 4)] = true
 		event_cells[Vector2i(c, 4)] = "fireplace"
-	# Пианино (cols 10..11, row 4)
+	# Piano (cols 10..11, row 4)
 	for c in range(10, 12):
 		blocked_cells[Vector2i(c, 4)] = true
 		event_cells[Vector2i(c, 4)] = "piano"
-	# Орган (cols 12..13, row 4)
+	# Organ (cols 12..13, row 4)
 	for c in range(12, 14):
 		blocked_cells[Vector2i(c, 4)] = true
 		event_cells[Vector2i(c, 4)] = "organ"

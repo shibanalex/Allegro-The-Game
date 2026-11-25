@@ -143,7 +143,7 @@ func _init() -> void:
 		pl.owner = root
 		return pl
 
-	# Warm & cool room lights sealed by real wall occluders — light spills organically through doorways!
+	# Room PointLight2D sources bounded by wall LightOccluder2D nodes.
 	add_point.call("HallwayWarmLight", Vector2(496, 348), Color(0.98, 0.81, 0.60, 1.0), 0.96, 2.65, 42.0, Color(0.04, 0.03, 0.06, 0.74))
 	add_point.call("EntryLight", Vector2(896, 146), Color(0.74, 0.84, 0.98, 1.0), 0.82, 2.20, 40.0, Color(0.03, 0.04, 0.07, 0.72))
 	add_point.call("KitchenLight", Vector2(928, 382), Color(1.0, 0.83, 0.60, 1.0), 0.94, 2.40, 42.0, Color(0.04, 0.03, 0.05, 0.74))

@@ -202,7 +202,7 @@ func _run_scene_intro() -> void:
 	await tw.finished
 	if not is_inside_tree():
 		return
-	# HOOK: будущее место для стартовой катсцены пробуждения перед передачей управления игроку
+	# Hook for an opening wake-up cutscene before handing control to the player
 	if hero_player != null:
 		hero_player.set("can_move", true)
 
@@ -210,11 +210,10 @@ func _run_scene_intro() -> void:
 func _process(delta: float) -> void:
 	_time += delta
 
-	# Smooth tungsten filament warm-up / cool-down when toggled
+	# Lamp toggle transition
 	var target_blend := 1.0 if desk_lamp_on else 0.0
 	_lamp_blend = move_toward(_lamp_blend, target_blend, delta * 5.5)
 
-	# Organic tungsten bulb breathing + subtle rare voltage dip
 	var micro_flicker: float = 0.0
 	var cycle: float = fmod(_time, 7.8)
 	if cycle > 7.25 and cycle < 7.42:
@@ -230,11 +229,10 @@ func _process(delta: float) -> void:
 		desk_lamp_halo.energy = maxf(0.0, (base_halo_e + lamp_wave * 0.55) * _lamp_blend)
 		desk_lamp_halo.visible = _lamp_blend > 0.01
 
-	# Faint reflection on the piano sheet music
 	if piano_light:
 		piano_light.energy = 0.26 + sin(_time * 1.4 + 0.9) * 0.015
 
-	# Overcast winter cloud drift gently modulating window light + volumetric rays in sync
+	# Modulate window light and god rays together
 	var cloud_drift := sin(_time * 0.32) * 0.055 + sin(_time * 0.79 + 1.3) * 0.025
 	if window_light:
 		window_light.energy = 0.46 + sin(_time * 0.9) * 0.025
@@ -245,7 +243,6 @@ func _process(delta: float) -> void:
 		ray_col.a = clampf(_base_ray_color.a * (1.0 + cloud_drift * 1.4), 0.04, 0.22)
 		(window_god_rays.material as ShaderMaterial).set_shader_parameter("ray_color", ray_col)
 
-	# Warm residential sconces in hallway & kitchen with subtle living warmth
 	if hallway_warm_light:
 		hallway_warm_light.energy = 0.96 + sin(_time * 1.15 + 0.7) * 0.022 + sin(_time * 3.7) * 0.007
 	if kitchen_light:
@@ -253,7 +250,6 @@ func _process(delta: float) -> void:
 	if entry_light:
 		entry_light.energy = 0.78 + cloud_drift * 0.55
 
-	# Subtle cool laptop screen luminance pulse
 	if laptop_glow:
 		laptop_glow.energy = 0.36 + sin(_time * 3.1) * 0.02 + sin(_time * 11.0) * 0.01
 	if simple_laptop_glow:
